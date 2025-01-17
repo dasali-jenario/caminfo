@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CamInfo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #2a2a2a;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #2a2a2a;
+        }
+        footer {
+            background-color: #2a2a2a;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .contact-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .contact-form button:hover {
+            background-color: #45a049;
+        }
+        .capabilities {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .capabilities label {
+            width: 200px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .capabilities input {
+            margin-right: 5px;
+        }
+        .generate-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .generate-btn:hover {
+            background-color: #45a049;
+        }
+        #sticker-container {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+</head>
+<body>
+
+<header>
+    <h1>Welcome to CamInfo</h1>
+    <p>Your trusted source for camera transparency</p>
+</header>
+
+<section id="what-is">
+    <h2>What is CamInfo?</h2>
+    <p>CamInfo is a platform that helps homeowners and businesses provide transparency about their video-enabled cameras. With CamInfo, you can generate simple, easy-to-understand stickers that display the capabilities of your cameras, including motion detection, face recognition, recording, and more.</p>
+</section>
+
+<section id="problem-solving">
+    <h2>What's the problem we're solving?</h2>
+    <p>With the rise of video-enabled cameras like doorbells and security cameras, it's important to provide transparency to those who are captured on camera. Delivery people, visitors, and even employees should know what data is being collected and what features are enabled. CamInfo ensures that these cameras’ capabilities are communicated clearly to everyone involved.</p>
+</section>
+
+<section id="how-it-works">
+    <h2>How this works</h2>
+    <p>1. Choose the features your camera has from a list of capabilities.</p>
+    <p>2. Generate a customized sticker with icons that represent the features of your camera.</p>
+    <p>3. Place the sticker next to your camera, and include a QR code that links to a detailed explanation page for each feature.</p>
+    <p>It's that simple! CamInfo ensures clarity and transparency for everyone interacting with your video-enabled devices.</p>
+</section>
+
+<section id="capabilities-selection">
+    <h2>Select Camera Capabilities</h2>
+    <div class="capabilities">
+        <label><input type="checkbox" id="motionDetection"> Motion Detection</label>
+        <label><input type="checkbox" id="faceRecognition"> Face Recognition</label>
+        <label><input type="checkbox" id="recording"> Recording</label>
+        <label><input type="checkbox" id="alerting"> Alerting</label>
+        <label><input type="checkbox" id="liveStreaming"> Live Streaming</label>
+        <label><input type="checkbox" id="twoWayAudio"> Two-way Audio</label>
+        <label><input type="checkbox" id="nightVision"> Night Vision</label>
+        <label><input type="checkbox" id="weatherResistance"> Weather Resistance</label>
+        <label><input type="checkbox" id="mobileAppIntegration"> Mobile App Integration</label>
+        <label><input type="checkbox" id="cloudStorage"> Cloud Storage</label>
+    </div>
+    <button class="generate-btn" onclick="generateSticker()">Generate Sticker</button>
+</section>
+
+<section id="sticker-container">
+    <h2>Your Camera Sticker</h2>
+    <div id="sticker"></div>
+    <div id="qrcode"></div>
+    <button class="generate-btn" onclick="downloadSticker()">Download Sticker</button>
+</section>
+
+<footer>
+    <p>&copy; 2025 CamInfo.xyz | All Rights Reserved</p>
+</footer>
+
+<script>
+    function generateSticker() {
+        const selectedCapabilities = [];
+        if (document.getElementById("motionDetection").checked) selectedCapabilities.push("Motion Detection");
+        if (document.getElementById("faceRecognition").checked) selectedCapabilities.push("Face Recognition");
+        if (document.getElementById("recording").checked) selectedCapabilities.push("Recording");
+        if (document.getElementById("alerting").checked) selectedCapabilities.push("Alerting");
+        if (document.getElementById("liveStreaming").checked) selectedCapabilities.push("Live Streaming");
+        if (document.getElementById("twoWayAudio").checked) selectedCapabilities.push("Two-way Audio");
+        if (document.getElementById("nightVision").checked) selectedCapabilities.push("Night Vision");
+        if (document.getElementById("weatherResistance").checked) selectedCapabilities.push("Weather Resistance");
+        if (document.getElementById("mobileAppIntegration").checked) selectedCapabilities.push("Mobile App Integration");
+        if (document.getElementById("cloudStorage").checked) selectedCapabilities.push("Cloud Storage");
+
+        // Display the capabilities selected
+        const stickerContainer = document.getElementById("sticker");
+        stickerContainer.innerHTML = "<ul>" + selectedCapabilities.map(cap => `<li>${cap}</li>`).join('') + "</ul>";
+
+        // Generate QR code
+        const qrCodeContainer = document.getElementById("qrcode");
+        qrCodeContainer.innerHTML = "";
+        new QRCode(qrCodeContainer, {
+            text: "https://caminfo.xyz",
+            width: 128,
+            height: 128
+        });
+
+        // Show the sticker and QR code
+        document.getElementById("sticker-container").style.display = "block";
+    }
+
+    function downloadSticker() {
+        const stickerContainer = document.getElementById("sticker");
+        const qrCodeContainer = document.getElementById("qrcode");
+
+        // Combine sticker and QR code into one canvas
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Set canvas dimensions and draw sticker and QR code
+        canvas.width = 400;
+        canvas.height = 400;
+
+        ctx.font = "16px Arial";
+        ctx.fillText(stickerContainer.innerText, 20, 20);
+
+        const qrCodeImage = qrCodeContainer.querySelector("img");
+        ctx.drawImage(qrCodeImage, 20, 100, 128, 128);
+
+        // Convert canvas to image and download
+        const dataUrl = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = "camera-sticker.png";
+        link.click();
+    }
+</script>
+
+</body>
+</html>

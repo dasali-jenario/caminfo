@@ -88,6 +88,11 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        #sticker-container img {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+        }
         /* Responsive design for mobile */
         @media (max-width: 600px) {
             header h1 {
@@ -155,15 +160,23 @@
 <script>
     function generateSticker() {
         const selectedCapabilities = [];
-        if (document.getElementById("motionDetectionNear").checked) selectedCapabilities.push("Motion Detection (Near)");
-        if (document.getElementById("motionDetectionFar").checked) selectedCapabilities.push("Motion Detection (Far)");
-        if (document.getElementById("faceRecognition").checked) selectedCapabilities.push("Face Recognition");
-        if (document.getElementById("recording").checked) selectedCapabilities.push("Recording");
-        if (document.getElementById("audio").checked) selectedCapabilities.push("Audio");
+        if (document.getElementById("motionDetectionNear").checked) selectedCapabilities.push("motionDetectionNear");
+        if (document.getElementById("motionDetectionFar").checked) selectedCapabilities.push("motionDetectionFar");
+        if (document.getElementById("faceRecognition").checked) selectedCapabilities.push("faceRecognition");
+        if (document.getElementById("recording").checked) selectedCapabilities.push("recording");
+        if (document.getElementById("audio").checked) selectedCapabilities.push("audio");
 
-        // Display the capabilities selected
+        // Clear previous content
         const stickerContainer = document.getElementById("sticker");
-        stickerContainer.innerHTML = "<ul>" + selectedCapabilities.map(cap => `<li>${cap}</li>`).join('') + "</ul>";
+        stickerContainer.innerHTML = "";
+
+        // Display the selected capabilities with their images
+        selectedCapabilities.forEach(function(capability) {
+            const img = document.createElement("img");
+            img.src = capability + ".jpg"; // Assuming the images are named as capability.jpg (e.g., motionDetectionNear.jpg)
+            img.alt = capability;
+            stickerContainer.appendChild(img);
+        });
 
         // Generate QR code
         const qrCodeContainer = document.getElementById("qrcode");
@@ -190,11 +203,15 @@
         canvas.width = 400;
         canvas.height = 400;
 
-        ctx.font = "16px Arial";
-        ctx.fillText(stickerContainer.innerText, 20, 20);
+        const imgElements = stickerContainer.getElementsByTagName("img");
+        let yPosition = 20;
+        Array.from(imgElements).forEach(function(img) {
+            ctx.drawImage(img, 20, yPosition, 50, 50);
+            yPosition += 60;
+        });
 
         const qrCodeImage = qrCodeContainer.querySelector("img");
-        ctx.drawImage(qrCodeImage, 20, 100, 128, 128);
+        ctx.drawImage(qrCodeImage, 20, yPosition, 128, 128);
 
         // Convert canvas to image and download
         const dataUrl = canvas.toDataURL("image/png");

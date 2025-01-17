@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -61,10 +60,10 @@
         .capabilities {
             display: flex;
             flex-wrap: wrap;
+            justify-content: space-between;
         }
         .capabilities label {
-            width: 200px;
-            margin-right: 10px;
+            width: 48%;
             margin-bottom: 10px;
         }
         .capabilities input {
@@ -89,6 +88,20 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive design for mobile */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .capabilities label {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            footer {
+                position: relative;
+            }
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
@@ -121,16 +134,11 @@
 <section id="capabilities-selection">
     <h2>Select Camera Capabilities</h2>
     <div class="capabilities">
-        <label><input type="checkbox" id="motionDetection"> Motion Detection</label>
+        <label><input type="checkbox" id="motionDetectionNear"> Motion Detection (Near)</label>
+        <label><input type="checkbox" id="motionDetectionFar"> Motion Detection (Far)</label>
         <label><input type="checkbox" id="faceRecognition"> Face Recognition</label>
         <label><input type="checkbox" id="recording"> Recording</label>
-        <label><input type="checkbox" id="alerting"> Alerting</label>
-        <label><input type="checkbox" id="liveStreaming"> Live Streaming</label>
-        <label><input type="checkbox" id="twoWayAudio"> Two-way Audio</label>
-        <label><input type="checkbox" id="nightVision"> Night Vision</label>
-        <label><input type="checkbox" id="weatherResistance"> Weather Resistance</label>
-        <label><input type="checkbox" id="mobileAppIntegration"> Mobile App Integration</label>
-        <label><input type="checkbox" id="cloudStorage"> Cloud Storage</label>
+        <label><input type="checkbox" id="audio"> Audio</label>
     </div>
     <button class="generate-btn" onclick="generateSticker()">Generate Sticker</button>
 </section>
@@ -149,16 +157,11 @@
 <script>
     function generateSticker() {
         const selectedCapabilities = [];
-        if (document.getElementById("motionDetection").checked) selectedCapabilities.push("Motion Detection");
+        if (document.getElementById("motionDetectionNear").checked) selectedCapabilities.push("Motion Detection (Near)");
+        if (document.getElementById("motionDetectionFar").checked) selectedCapabilities.push("Motion Detection (Far)");
         if (document.getElementById("faceRecognition").checked) selectedCapabilities.push("Face Recognition");
         if (document.getElementById("recording").checked) selectedCapabilities.push("Recording");
-        if (document.getElementById("alerting").checked) selectedCapabilities.push("Alerting");
-        if (document.getElementById("liveStreaming").checked) selectedCapabilities.push("Live Streaming");
-        if (document.getElementById("twoWayAudio").checked) selectedCapabilities.push("Two-way Audio");
-        if (document.getElementById("nightVision").checked) selectedCapabilities.push("Night Vision");
-        if (document.getElementById("weatherResistance").checked) selectedCapabilities.push("Weather Resistance");
-        if (document.getElementById("mobileAppIntegration").checked) selectedCapabilities.push("Mobile App Integration");
-        if (document.getElementById("cloudStorage").checked) selectedCapabilities.push("Cloud Storage");
+        if (document.getElementById("audio").checked) selectedCapabilities.push("Audio");
 
         // Display the capabilities selected
         const stickerContainer = document.getElementById("sticker");
@@ -205,4 +208,3 @@
 </script>
 
 </body>
-</html>

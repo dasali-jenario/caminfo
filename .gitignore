@@ -1,0 +1,21 @@
+# System files
+.DS_Store
+Thumbs.db
+.thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build outputs
+dist/
+build/
+out/
+*.log
+
+# Project specific
+NEW_FILE-REQUESTS.md 
